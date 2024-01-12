@@ -33,7 +33,7 @@ if (isset($_GET['selected_posts'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Email marketing</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -67,6 +67,10 @@ if (isset($_GET['selected_posts'])) {
 	    <?php $i++; endforeach ?>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <form action="preview.php" method="post">
+  	<input type="hidden" name="ids" value="<?php echo $_GET['selected_posts']; ?>">
+  	<button type="submit" class="btn btn-primary" id="preview" style="float: right;margin-top: -37px;">Preview</button>
   </form>
 </div>
 
