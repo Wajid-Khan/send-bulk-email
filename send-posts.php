@@ -33,7 +33,7 @@ if (isset($_GET['selected_posts'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Email marketing</title>
+  <title>Send Bulk Email</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -44,35 +44,45 @@ if (isset($_GET['selected_posts'])) {
 <body>
 
 <div class="container my-5">
-  <h2>Email marketing</h2>
+  <h2>Send Bulk Email</h2>
   <hr>
   <form action="send_email_post.php" method="post">
-  	<div class="row">
+ 
 	  	<?php $i=1; foreach ($data as $value): ?>
-		    <div class="form-group col-md-4">
-			    <div class="form-group col-12">
+		    
+			    <div>
 			    	<h4>Post <?php echo $i; ?></h4>
 			    </div>
-			    <div class="form-group col-md-12">
-			      <label for="title">Title:</label>
-			      <input type="text" class="form-control" readonly id="title" placeholder="Enter title" name="title[]" value="<?php echo $value['title']['rendered'] ?>">
-			    </div>
 			    <input type="hidden" name="image_url[]" value="<?php echo $value['yoast_head_json']['og_image'][0]['url'] ?>">
-			    <div class="form-group col-md-12">
-			      <label for="content">Content</label>
-			      <textarea class="form-control" readonly id="content" placeholder="Enter content" name="content[]" rows="5"><?php $cont = strip_tags($value['excerpt']['rendered']); echo $cont; ?></textarea>
-			    </div>
-			    <hr>
-		    </div>
+			    <input type="hidden" name="link[]" value="<?php echo $value['link']; ?>">
+			    <div class="row">
+				    <div class="form-group col-md-4">
+				      <label for="title">Title:</label>
+				      <textarea class="form-control" readonly id="title" name="title[]" rows="5"><?php echo $value['title']['rendered'] ?></textarea>
+				    </div>
+				    <div class="form-group col-md-8">
+				      <label for="content">Content</label>
+				      <textarea class="form-control" readonly id="content" placeholder="Enter content" name="content[]" rows="5"><?php $cont = strip_tags($value['excerpt']['rendered']); echo $cont; ?></textarea>
+				    </div>
+			    	<hr>
+		    	</div>
 	    <?php $i++; endforeach ?>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <button type="submit" class="btn btn-primary" id="clearStorage">Submit</button>
   </form>
-  <form action="preview.php" method="post">
+  <a href="preview.php?ids=<?php echo $_GET['selected_posts']; ?>" class="btn btn-primary" id="preview" target="_blank" style="float: right;margin-top: -37px;">Preview</a>
+  <!-- <form action="preview.php" method="post">
   	<input type="hidden" name="ids" value="<?php echo $_GET['selected_posts']; ?>">
-  	<button type="submit" class="btn btn-primary" id="preview" style="float: right;margin-top: -37px;">Preview</button>
-  </form>
+  	<button type="submit" class="btn btn-primary" id="preview" >Preview</button>
+  </form> -->
 </div>
 
+<script>
+	$('#clearStorage').on('click', function() {
+        localStorage.removeItem('checkedValues');
+        checkedValues = [];
+        $('#result').val('');
+    });
+</script>
 </body>
 </html>

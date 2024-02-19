@@ -1,14 +1,12 @@
 <?php  
-// print_r($_POST['ids']);die;
-if (isset($_POST['ids'])) 
+
+if (isset($_GET['ids'])) 
 {
-	$selectedPosts = explode(',', $_POST['ids']);
-	// $ids = (array)$ids;
-	// echo var_dump($ids);die;
-    foreach ($selectedPosts as $key => $postId) 
-    {
-        $api_url = 'https://livefit4ever.com/wp-json/wp/v2/posts/' . $postId;
-        $ch = curl_init($api_url);
+	$selectedPosts = explode(',', $_GET['ids']);
+   foreach ($selectedPosts as $key => $postId) 
+   {
+      $api_url = 'https://livefit4ever.com/wp-json/wp/v2/posts/' . $postId;
+      $ch = curl_init($api_url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($ch);
 		if (curl_errno($ch)) 
@@ -19,7 +17,7 @@ if (isset($_POST['ids']))
 		{
 		    $data[] = json_decode($response, true);
 		}
-    }
+   }
 } 
 else 
 {
@@ -440,7 +438,7 @@ else
 
 
                                                                      	<!-- ////////////////// -->
-																		<span style="line-height: 16.8px;">Read More <?php echo $i; ?></span></span>
+																		<span style="line-height: 16.8px;">Read More </span></span>
                                                                      </a>
                                                                      <br>
                                                             </div>
@@ -513,7 +511,7 @@ else
 
 
 <!---------------------------------Fifth Row Start------Social Icons--------------------------->
-
+            <div style="padding: 5px 0;background: #fff;margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">&nbsp;</div>
             <div class="u-row-container" style="padding: 0px;background-color: transparent">
             <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
             <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">

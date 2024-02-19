@@ -57,10 +57,35 @@ curl_close($ch);
             width: 20px;
             height: 20px;
         }
+        .overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.7);
+          justify-content: center;
+          align-items: center;
+          z-index: 999;
+        }
+
+        .loader {
+          text-align: center;
+        }
+
+        .loader img {
+          width: 450px; /* Adjust the size of the loader image */
+        }
     </style>
 </head>
-<body>
-    <div class="container my-5">
+<body >
+    <div class="container my-5 ">
+        <div class="overlay" id="overlay">
+            <div class="loader">
+              <img src="assets/loader.gif" alt="Loader">
+            </div>
+        </div>
         <h3>Wordpress posts</h3>
         <form method="get" action="send-posts.php">
             <div class="row">
@@ -68,13 +93,13 @@ curl_close($ch);
                     <input type="text" id="result" name="selected_posts" class="form-control" readonly required>
                 </div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" onclick="showLoader()" id="submit_posts">Submit</button>
                     <button type="button" id="clearStorage" class="btn btn-primary">Clear</button>
                 </div>
             </div>
         </form>
         
-        <table class="table">
+        <table class="table" >
             <thead>
                 <tr>
                     <th>Post Id</th>
@@ -95,12 +120,12 @@ curl_close($ch);
             </tbody>
         </table>
         <?php if(isset($_GET['page']) && ($_GET['page'] > 1)): ?>
-            <a href="new_list.php?page=<?php if(isset($_GET['page'])): echo $_GET['page'] - 1; endif; ?>" class="btn btn-primary">Prev</a>
+            <a href="index.php?page=<?php if(isset($_GET['page'])): echo $_GET['page'] - 1; endif; ?>" class="btn btn-primary" onclick="showLoader()">Prev</a>
         <?php else: ?>
-            <a href="javascript:vooid(0)" class="btn btn-primary disabled">Prev</a>
+            <a href="javascript:vooid(0)" class="btn btn-primary disabled" onclick="showLoader()">Prev</a>
         <?php endif; ?>
-        <a style="float:right;" href="new_list.php?page=<?php if(isset($_GET['page'])): echo $_GET['page'] + 1; else: echo 2; endif; ?>" 
-        class="btn btn-primary">Next</a>
+        <a style="float:right;" href="index.php?page=<?php if(isset($_GET['page'])): echo $_GET['page'] + 1; else: echo 2; endif; ?>" 
+        class="btn btn-primary" onclick="showLoader()">Next</a>
     </div>
         
 
@@ -109,6 +134,32 @@ curl_close($ch);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
+
+            $('#submit_posts').click(function(){
+                var result = $('#result').val();
+                var stringArray = result.split(',');
+                if (stringArray.length === 6) 
+                {
+                    return true;
+                }
+                else if(stringArray.length < 6)
+                {
+                    alert('Please select 6 posts');
+                    return false;
+                } else if(result === '')
+                {
+                    alert('Please select posts');
+                    return false;
+                }
+                else
+                {
+                    alert('Please select 6 posts');
+                    return false;
+                }
+                    
+            }); 
+
+            $('#overlay').css('display','none');
             // Initialize checkedValues with values from local storage
             var checkedValues = JSON.parse(localStorage.getItem('checkedValues')) || [];
 
@@ -141,6 +192,16 @@ curl_close($ch);
                 $('#result').val('');
             });
         });
+        function showLoader() {
+          var overlay = document.getElementById("overlay");
+          overlay.style.display = "flex"; // Show overlay
+
+          // Simulate an asynchronous task (e.g., AJAX request) that takes some time
+          setTimeout(function() {
+            // Hide overlay after the task is complete
+            overlay.style.display = "none";
+          }, 2000); // Adjust the time based on your task duration
+        }
     </script>
 </body>
 </html>
