@@ -86,7 +86,7 @@ curl_close($ch);
               <img src="assets/loader.gif" alt="Loader">
             </div>
         </div>
-        <h3>Wordpress posts</h3>
+        <h3>Livefit4ever blogs for sending bulk email</h3>
         <form method="get" action="send-posts.php">
             <div class="row">
                 <div class="col-md-6">
@@ -98,6 +98,8 @@ curl_close($ch);
                 </div>
             </div>
         </form>
+        <br>
+        <!-- <hr> -->
         
         <table class="table" >
             <thead>
