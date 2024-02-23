@@ -1,9 +1,8 @@
 <?php
 
-if (isset($_GET['selected_posts'])) {
+if (isset($_GET['selected_posts'])) 
+{
     $selectedPosts = explode(',', $_GET['selected_posts']);
-    // $data = [];
-    // Fetch and display posts based on the received post IDs
     foreach ($selectedPosts as $postId) {
         $api_url = 'https://livefit4ever.com/wp-json/wp/v2/posts/' . $postId;
 
@@ -17,11 +16,6 @@ if (isset($_GET['selected_posts'])) {
 		else 
 		{
 		    $data[] = json_decode($response, true);
-		    // $img_link = $data['yoast_head_json']['og_image'][0]['url'];
-		    // echo '<h2>' . $data['title']['rendered'] . '</h2>';
-		    // echo '<p>' . $data['excerpt']['rendered'] . '</p>';
-		    // echo '<a href="'.$img_link.'" target="_blank">Image Link</a> ';
-		    // echo '<a href="'.$data['link'].'" target="_blank">Page Link</a>';
 		}
 
     }
